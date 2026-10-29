@@ -1,4 +1,5 @@
-# Maintainer: NourEddine Y.
+# Maintainer: hiruocha <hiruocha[at]outlook[dot]com>
+# Contributor: NourEddine Y.
 # Contributor: Oskar Gerlciz Kowalczuk
 # Contributor: StaticNullException <aurcontact@teto.party>
 
