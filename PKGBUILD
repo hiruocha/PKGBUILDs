@@ -4,7 +4,7 @@
 
 pkgname=zen-browser
 pkgver=1.23b
-pkgrel=1
+pkgrel=2
 pkgdesc='Firefox-based web browser built from upstream release source snapshot'
 url='https://zen-browser.app'
 arch=('x86_64')
