@@ -105,6 +105,9 @@ mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 
 ac_add_options --prefix=/usr
 ac_add_options --enable-release
+ac_add_options --disable-debug
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-debug-js-modules
 ac_add_options --enable-hardening
 ac_add_options --enable-optimize
 # encoding_rs simd-accel opts out of Rust's stable compatibility story and
