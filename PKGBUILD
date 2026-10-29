@@ -65,6 +65,7 @@ makedepends=(
   zip
 )
 optdepends=(
+  'hunspell-dictionary: Spell checking'
   'libnotify: Notification integration'
   'networkmanager: Location detection via available WiFi networks'
   'onnxruntime: Local machine learning features such as smart tab groups'
