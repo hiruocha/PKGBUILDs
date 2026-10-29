@@ -78,12 +78,11 @@ options=(
   !makeflags
 )
 
-_srcroot='zen-source'
 # Keep versioned GitHub release URLs here. Do not switch this to /latest/ in an
 # AUR package; use .nvchecker.toml or update-zen-browser-release.sh to refresh
 # pkgver and checksums deterministically.
 source=(
-  "$_srcroot-$pkgver.tar.zst::https://github.com/zen-browser/desktop/releases/download/$pkgver/zen.source.tar.zst"
+  "zen-source-$pkgver.tar.zst::https://github.com/zen-browser/desktop/releases/download/$pkgver/zen.source.tar.zst"
   "$pkgname.desktop"
   '0004-Use-wasm32-wasip1-target.patch'
   '0005-Fix-cbindgen-BudgetType_VALUES-COUNT-issue.patch'
@@ -92,19 +91,15 @@ sha256sums=('c2a2f7853f939f1a5f510c885d450564e5bcf6957453c1ff3adb0ea595b872aa'
             'af16fec9a88cbfffee34a6a4eb5b3074931477fcefee252840d77cf146568851'
             '28b086f5492d8e6731fe0dfe34a2e4c6d4d502a9eefa15a31e44b5788cf4df89'
             '0d24f2a45fa0f7fe108a91a50ae55708f66899b0229df7722fb87962f7a2a243')
-noextract=("$_srcroot-$pkgver.tar.zst")
 
 prepare() {
-  rm -rf "$srcdir/$_srcroot"
-  mkdir -p "$srcdir/$_srcroot" "$srcdir/mozbuild"
-  bsdtar -xf "$srcdir/$_srcroot-$pkgver.tar.zst" -C "$srcdir/$_srcroot"
-
-  cd "$srcdir/$_srcroot"
+  cd "$srcdir"
+  rm -f "$srcdir/.mozconfig" "$srcdir/mozconfig"
 
   patch -Np1 -i "$srcdir/0004-Use-wasm32-wasip1-target.patch"
   patch -Np1 -i "$srcdir/0005-Fix-cbindgen-BudgetType_VALUES-COUNT-issue.patch"
 
-  cat >"$srcdir/mozconfig" <<EOF
+  cat >"$srcdir/zen-mozconfig" <<EOF
 ac_add_options --enable-application=browser
 mk_add_options MOZ_OBJDIR=${PWD@Q}/obj
 
@@ -143,7 +138,7 @@ EOF
 }
 
 build() {
-  cd "$srcdir/$_srcroot"
+  cd "$srcdir"
 
   export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=pip
   export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
@@ -158,7 +153,7 @@ build() {
   ulimit -n 4096
 
   echo 'Building instrumented browser...'
-  cat >.mozconfig "$srcdir/mozconfig" - <<'EOF'
+  cat >"$srcdir/mozconfig" "$srcdir/zen-mozconfig" - <<EOF
 ac_add_options --enable-profile-generate=cross
 EOF
   ./mach build --priority normal
@@ -177,7 +172,7 @@ EOF
   ./mach clobber objdir
 
   echo 'Building optimized browser...'
-  cat >.mozconfig "$srcdir/mozconfig" - <<EOF
+  cat >"$srcdir/mozconfig" "$srcdir/zen-mozconfig" - <<EOF
 ac_add_options --enable-lto=cross,full
 ac_add_options --enable-profile-use=cross
 ac_add_options --with-pgo-profile-path=${PWD@Q}/merged.profdata
@@ -187,7 +182,7 @@ EOF
 }
 
 package() {
-  cd "$srcdir/$_srcroot"
+  cd "$srcdir"
 
   DESTDIR="$pkgdir" ./mach install
 
