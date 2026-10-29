@@ -173,7 +173,7 @@ EOF
 
   echo 'Building optimized browser...'
   cat >"$srcdir/mozconfig" "$srcdir/zen-mozconfig" - <<EOF
-ac_add_options --enable-lto=cross,full
+ac_add_options --enable-lto=cross,thin
 ac_add_options --enable-profile-use=cross
 ac_add_options --with-pgo-profile-path=${PWD@Q}/merged.profdata
 ac_add_options --with-pgo-jarlog=${PWD@Q}/jarlog
