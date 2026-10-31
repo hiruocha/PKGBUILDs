@@ -4,8 +4,8 @@
 # Contributor: StaticNullException <aurcontact@teto.party>
 
 pkgname=zen-browser
-pkgver=1.23b
-pkgrel=2
+pkgver=1.24b
+pkgrel=1
 pkgdesc='Firefox-based web browser built from upstream release source snapshot'
 url='https://zen-browser.app'
 arch=('x86_64')
@@ -89,7 +89,7 @@ source=(
   '0004-Use-wasm32-wasip1-target.patch'
   '0005-Fix-cbindgen-BudgetType_VALUES-COUNT-issue.patch'
 )
-sha256sums=('c2a2f7853f939f1a5f510c885d450564e5bcf6957453c1ff3adb0ea595b872aa'
+sha256sums=('a3a3fa0adbccc15711878f9947046b4278460b950264d9f80374c4a959d5640e'
             'af16fec9a88cbfffee34a6a4eb5b3074931477fcefee252840d77cf146568851'
             '28b086f5492d8e6731fe0dfe34a2e4c6d4d502a9eefa15a31e44b5788cf4df89'
             '0d24f2a45fa0f7fe108a91a50ae55708f66899b0229df7722fb87962f7a2a243')
